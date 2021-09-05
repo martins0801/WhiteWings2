@@ -1,3 +1,4 @@
+<%@ page import="model.Utente.Utente" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         <%@include file="/css/menu.css"%>
-
     </style>
+
+    <%
+        request.getSession().setAttribute("user", null);
+        Utente user=(Utente) request.getSession().getAttribute("user");
+        request.getSession().setAttribute("user", user);
+        String context = request.getContextPath();
+        String home=context;
+
+        if(user==null)
+            home+="/index.jsp";
+        else if(user.isIfAdmin())
+            home+="/views/homeAmministratore.jsp";
+        else if(!(user.isIfAdmin()))
+            home+="/views/UtenteLoggato.jsp";
+
+    %>
+
     <script src="https://kit.fontawesome.com/aafa5f65fa.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <div class="header" style="background-image:url(/immagini/logo.png)">
-    <img src="immagini/logoNewDimezzato.png" border="0" class="responsive-image">
+    <img src="immagini/Senzanome.png" border="0" class="responsive-image">
 </div>
 <div class="navbar">
-    <a href="#">HOME <i class="fas fa-home"></i></a>
+    <a href="<%=home%>">HOME <i class="fas fa-home"></i></a>
     <a href="#">BISCOTTI <i class="fas fa-cookie"> </i></a>
     <a href="#">TORTE <i class='fas fa-cheese'></i> </a>
     <a><div class="search-container">
@@ -24,35 +42,11 @@
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div></a>
-    <a href="login.jsp" class="right">LOGIN <i class="fas fa-sign-in-alt" ></i> </a>
+    <a href="views/login.jsp" class="right">LOGIN <i class="fas fa-sign-in-alt" ></i> </a>
     <a href="#" class="right" >CARRELLO <i class="fas fa-shopping-cart" ></i></a>
 </div>
 
 <div class="row">
-    <!--<div class="side">
-        <h2>About Me</h2>
-        <h5>Photo of me:</h5>
-        <div class="fakeimg" style="height:200px;">Image</div>
-        <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-        <h3>More Text</h3>
-        <p>Lorem ipsum dolor sit ame.</p>
-        <div class="fakeimg" style="height:60px;">Image</div><br>
-        <div class="fakeimg" style="height:60px;">Image</div><br>
-        <div class="fakeimg" style="height:60px;">Image</div>
-    </div>
-   <!--<div class="main">
-        <h2>BENVENUTO</h2>
-
-        <p>Vieni a scoprire i nostri prodotti! </p>
-        <p> Artigiani dal 1990!
-        </p>
-        <br>
-        <h2>TITLE HEADING</h2>
-        <h5>Title description, Sep 2, 2017</h5>
-        <div class="fakeimg" style="height:200px;">Image</div>
-        <p>Some text..</p>
-        <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div> -->
 
     <div class="demo coursemeal">
 

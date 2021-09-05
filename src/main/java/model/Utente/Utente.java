@@ -2,7 +2,7 @@ package model.Utente;
 
 public class Utente {
 
-    private String email, username, psword, nome, via, cap, citta, telefono, cognome;
+    private String email, username, psword, nome, via, cap, citta, telefono;
     private boolean ifAdmin;
 
     public Utente(){}
@@ -79,11 +79,18 @@ public class Utente {
         this.ifAdmin = ifAdmin;
     }
 
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", psword='" + psword + '\'' +
+                ", nome='" + nome + '\'' +
+                ", via='" + via + '\'' +
+                ", cap='" + cap + '\'' +
+                ", citta='" + citta + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", ifAdmin=" + ifAdmin +
+                '}';
     }
 }

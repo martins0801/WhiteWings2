@@ -29,6 +29,7 @@
 </head>
 <body>
 
+
 <div class="header" style="background-image:url(/immagini/logo.png)">
     <img src="immagini/Senzanome.png" border="0" class="responsive-image">
 </div>
@@ -42,7 +43,8 @@
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div></a>
-    <a href="views/login.jsp" class="right">LOGIN <i class="fas fa-sign-in-alt" ></i> </a>
+    <a href="#" class="right">LOGOUT <i class="fas fa-sign-out-alt"></i> </a>
+    <a href="#" class="right">PROFILO <i class="far fa-user"></i></a>
     <a href="#" class="right" >CARRELLO <i class="fas fa-shopping-cart" ></i></a>
 </div>
 

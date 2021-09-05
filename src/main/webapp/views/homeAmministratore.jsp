@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         <%@include file="/css/menu.css"%>
+
     </style>
 
     <%
@@ -29,21 +30,32 @@
 </head>
 <body>
 
+
 <div class="header" style="background-image:url(/immagini/logo.png)">
     <img src="immagini/Senzanome.png" border="0" class="responsive-image">
 </div>
 <div class="navbar">
-    <a href="<%=home%>">HOME <i class="fas fa-home"></i></a>
+    <a href="#">HOME <i class="fas fa-home"></i></a>
     <a href="#">BISCOTTI <i class="fas fa-cookie"> </i></a>
     <a href="#">TORTE <i class='fas fa-cheese'></i> </a>
+    <div class="dropdown">
+        <button class="dropbtn">IMPOSTAZIONI
+            <i class="fas fa-user-cog"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="#">MODIFICA DOLCI</a>
+            <a href="#">MODIFICA TIPOLOGIA</a>
+            <a href="#">MODIFICA CLIENTI</a>
+        </div>
+    </div>
     <a><div class="search-container">
         <form action="/action_page.php">
             <input type="text" placeholder="Search.." name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div></a>
-    <a href="views/login.jsp" class="right">LOGIN <i class="fas fa-sign-in-alt" ></i> </a>
-    <a href="#" class="right" >CARRELLO <i class="fas fa-shopping-cart" ></i></a>
+    <a href="#" class="right">LOGOUT <i class="fas fa-sign-in-alt" ></i> </a>
+
 </div>
 
 <div class="row">

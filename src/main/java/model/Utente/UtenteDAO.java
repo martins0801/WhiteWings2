@@ -15,7 +15,7 @@ public class UtenteDAO {
     public ArrayList<Utente> selectAllUtenti(){
         ArrayList<Utente> list = new ArrayList<>();
         try(Connection conn= ConPool.getConnection()){
-            PreparedStatement ps= conn.prepareStatement("SELECT * FROM 'utente';");
+            PreparedStatement ps= conn.prepareStatement("SELECT * FROM utente;");
             ResultSet set = ps.executeQuery();
             Utente utenteR = new Utente();
             utenteR.setIfAdmin(set.getBoolean("ifAdmin")); //IfAdmin in parentesi è quello del database (NOME)
@@ -48,21 +48,24 @@ public class UtenteDAO {
         return list;
     }
 
-    public Utente selectUtenteByEmail(String email){
+    public Utente selectUtenteByNomeUtentePassword(String nomeUtente,String password){
         Utente utenteRitorno = new Utente();
         try(Connection conn= ConPool.getConnection()){
-            PreparedStatement ps= conn.prepareStatement("SELECT * FROM 'utente' WHERE 'email=?';");
-            ps.setString(1, email);
+            PreparedStatement ps= conn.prepareStatement("SELECT * FROM utente WHERE Username = '"+nomeUtente+"' AND Psword = '"+password+"'");
+            //ps.setString(1, email);
             ResultSet set = ps.executeQuery();
-                utenteRitorno.setIfAdmin(set.getBoolean("ifAdmin"));
-                utenteRitorno.setCap(set.getString("Cap"));
-                utenteRitorno.setCitta(set.getString("Citta"));
-                utenteRitorno.setVia(set.getString("Via"));
-                utenteRitorno.setNome(set.getString("Nome"));
-                utenteRitorno.setUsername(set.getString("Username"));
-                utenteRitorno.setEmail(set.getString("email"));
-                utenteRitorno.setPsword(set.getString("Psword"));
-                utenteRitorno.setTelefono(set.getString("telefono"));
+            while(set.next()){
+            utenteRitorno.setEmail(set.getString("email"));
+            System.out.println(utenteRitorno.getEmail());
+            utenteRitorno.setUsername(set.getString("Username"));
+            utenteRitorno.setPsword(set.getString("Psword"));
+            utenteRitorno.setIfAdmin(set.getBoolean("ifAdmin"));
+            utenteRitorno.setNome(set.getString("Nome"));
+            utenteRitorno.setVia(set.getString("Via"));
+            utenteRitorno.setCap(set.getString("Cap"));
+            utenteRitorno.setCitta(set.getString("Citta"));
+            utenteRitorno.setTelefono(set.getString("telefono"));
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,7 +74,7 @@ public class UtenteDAO {
 
     public boolean insertUtente(Utente utente){
         try(Connection conn=ConPool.getConnection()) {
-            PreparedStatement ps= conn.prepareStatement("INSERT INTO 'utente ( email, username, psword, ifAdmin, nome, via, cap,citta,telefono)' VALUES '?,?,?,?,?,?,?,?,?';");
+            PreparedStatement ps= conn.prepareStatement("INSERT INTO utente ( email, username, psword, ifAdmin, nome, via, cap,citta,telefono) VALUES (?,?,?,?,?,?,?,?,?);");
             ps.setString(1, utente.getEmail());
             ps.setString(2,utente.getUsername());
             ps.setString(3,utente.getPsword());
@@ -93,8 +96,8 @@ public class UtenteDAO {
 
     public boolean deleteUtente(String email) {
         try(Connection conn = ConPool.getConnection()){
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM 'utente' WHERE 'email=?';");
-            ps.setString(1,email);
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM utente WHERE email='"+email+"'");
+           // ps.setString(1,email);
             int ritorno=ps.executeUpdate();
             if (ritorno==2) return false;
             else return true;
@@ -107,7 +110,7 @@ public class UtenteDAO {
 
     public boolean updateUtente(Utente utente){
         try(Connection conn=ConPool.getConnection()) {
-            PreparedStatement ps= conn.prepareStatement("UPDATE from 'utente'VALUES  'username=?, psword=?, nome=?, via=?, cap=?,citta=?,telefono=?' WHERE  'email=?';");
+            PreparedStatement ps= conn.prepareStatement("UPDATE from utente VALUES  (username=?, psword=?, nome=?, via=?, cap=?,citta=?,telefono=?) WHERE  (email=?);");
 
             ps.setString(1,utente.getUsername());
             ps.setString(2,utente.getPsword());
@@ -125,6 +128,74 @@ public class UtenteDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+
+    public boolean controllaEmail(Utente utente){
+
+        Utente utenteRitorno = new Utente();
+        try(Connection conn = ConPool.getConnection()){
+
+            PreparedStatement ps= conn.prepareStatement("SELECT * FROM utente WHERE email = '"+utente.getEmail()+"'");
+            //ps.setString(1, email);
+            ResultSet set = ps.executeQuery();
+            while(set.next()){
+                utenteRitorno.setEmail(set.getString("email"));
+                System.out.println(utenteRitorno.getEmail());
+                utenteRitorno.setUsername(set.getString("Username"));
+                utenteRitorno.setPsword(set.getString("Psword"));
+                utenteRitorno.setIfAdmin(set.getBoolean("ifAdmin"));
+                utenteRitorno.setNome(set.getString("Nome"));
+                utenteRitorno.setVia(set.getString("Via"));
+                utenteRitorno.setCap(set.getString("Cap"));
+                utenteRitorno.setCitta(set.getString("Citta"));
+                utenteRitorno.setTelefono(set.getString("telefono"));
+            }
+
+            if(utente!=null) return true;
+            else return false;
+
+
+        }catch(SQLException e){
+            System.out.println("non presente in Database");
+            return false;
+        }
+
+
+    }
+
+    public boolean controllaNomeUtente(Utente utente){
+
+        Utente utenteRitorno = new Utente();
+        try(Connection conn = ConPool.getConnection()){
+
+            PreparedStatement ps= conn.prepareStatement("SELECT * FROM utente WHERE Username = '"+utente.getUsername()+"'");
+            //ps.setString(1, email);
+            ResultSet set = ps.executeQuery();
+            while(set.next()){
+                utenteRitorno.setEmail(set.getString("email"));
+                System.out.println(utenteRitorno.getEmail());
+                utenteRitorno.setUsername(set.getString("Username"));
+                utenteRitorno.setPsword(set.getString("Psword"));
+                utenteRitorno.setIfAdmin(set.getBoolean("ifAdmin"));
+                utenteRitorno.setNome(set.getString("Nome"));
+                utenteRitorno.setVia(set.getString("Via"));
+                utenteRitorno.setCap(set.getString("Cap"));
+                utenteRitorno.setCitta(set.getString("Citta"));
+                utenteRitorno.setTelefono(set.getString("telefono"));
+            }
+
+            if(utente!=null) return true;
+            else return false;
+
+
+        }catch(SQLException e){
+            System.out.println("non presente in Database");
+            return false;
+        }
+
+
     }
 
 }
