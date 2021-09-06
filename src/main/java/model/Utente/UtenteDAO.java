@@ -189,7 +189,6 @@ public class UtenteDAO {
             if(utenteRitorno.getUsername()!=null) return true;
             else return false;
 
-
         }catch(SQLException e){
             System.out.println("non presente in Database");
             return false;

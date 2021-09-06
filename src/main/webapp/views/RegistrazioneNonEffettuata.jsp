@@ -10,8 +10,6 @@
 <head>
     <title>REGISTRAZIONE NON EFFETTUATA!</title>
 </head>
-<body>
-
 
 
 </body>
