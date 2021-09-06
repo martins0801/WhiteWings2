@@ -153,7 +153,7 @@ public class UtenteDAO {
                 utenteRitorno.setTelefono(set.getString("telefono"));
             }
 
-            if(utente!=null) return true;
+            if(utenteRitorno.getEmail()!=null) {System.out.println("Utente ritorno del DAO:"+utenteRitorno.toString()); return true;}
             else return false;
 
 
@@ -186,7 +186,7 @@ public class UtenteDAO {
                 utenteRitorno.setTelefono(set.getString("telefono"));
             }
 
-            if(utente!=null) return true;
+            if(utenteRitorno.getUsername()!=null) return true;
             else return false;
 
 

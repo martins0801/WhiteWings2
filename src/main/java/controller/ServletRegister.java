@@ -32,22 +32,37 @@ public class ServletRegister extends HttpServlet {
         utente.setCap(cap);
         utente.setTelefono(telefono);
         utente.setIfAdmin(false);
+        System.out.println(utente.toString());
 
         UtenteDAO utenteDAO = new UtenteDAO();
+        String address=null;
 
         if(utenteDAO.controllaEmail(utente)){
+            System.out.println("Sono entrata nell'if di controlla email");
+                address="/views/register.jsp";
             System.out.println("email già presente in database");
         }else if(utenteDAO.controllaNomeUtente(utente)){
+            System.out.println("Sono entrata nell'if di controlla nome u");
+            address="/views/register.jsp";
             System.out.println("nome utente già presente in database");
         }else{
             if(utenteDAO.insertUtente(utente)){
+                System.out.println("Sono entrata nell if dell'inserimento");
                 System.out.println("Inserimento effettuato");
+                address="/views/RegistrazioneEffettuata.jsp";
             }
             else{
+                System.out.println("Sono entrata nell else dell'inserimento");
                 System.out.println("Inserimento NON effettuato");
+                address="/views/RegistrazioneNonEffettuata.jsp";
             }
         }
 
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("user", utente);
+        RequestDispatcher requestDispatcher= request.getRequestDispatcher(address);
+        requestDispatcher.forward(request, response);
 
 
     }
